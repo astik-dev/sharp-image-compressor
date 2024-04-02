@@ -1,0 +1,17 @@
+{
+  "name": "sharp-image-compressor",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "glob": "^10.3.12",
+    "sharp": "^0.33.3"
+  },
+  "type": "module"
+}
