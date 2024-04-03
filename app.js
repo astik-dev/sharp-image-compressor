@@ -1,7 +1,8 @@
 import path from 'path';
 import fs from 'fs';
-import sharp from 'sharp';
 import { glob } from 'glob';
+
+import compressImage from './lib/compressImage.js';
 
 
 const originalsFolder = "./images/originals/";
@@ -32,19 +33,6 @@ for (const originalImg of originalImgs) {
 
     fs.mkdirSync(path.dirname(compressedImgPath), { recursive: true });
 
-    sharp(originalImgPath)
-        .jpeg({
-            quality: 80,
-            progressive: true,
-            mozjpeg: true,
-        })
-        .toFile(compressedJpgImgPath)
-        .then(() => console.log(compressedJpgImgPath))
-        .catch(err => console.error('Error:', compressedJpgImgPath, err));
-
-    sharp(originalImgPath)
-        .webp({ quality: 70 })
-        .toFile(compressedWebpImgPath)
-        .then(() => console.log(compressedWebpImgPath))
-        .catch(err => console.error('Error:', compressedWebpImgPath, err));
+    compressImage(originalImgPath, compressedJpgImgPath, "jpeg");
+    compressImage(originalImgPath, compressedWebpImgPath, "webp");
 }
