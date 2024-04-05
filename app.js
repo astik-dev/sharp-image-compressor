@@ -46,6 +46,10 @@ for (const originalImg of originalImgs) {
 }
 Promise.all(compressionPromises)
     .then(() => {
+        if (compressionPromises.length == 0) {
+            console.log("No new images found for compression.");
+            return;
+        }
         // Log the number of compressed images and the time taken for compression
         const numberOfCompressedImages = compressionPromises.length;
         const imageWord = compressionPromises.length == 1 ? "image" : "images";
