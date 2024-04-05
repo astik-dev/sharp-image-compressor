@@ -1,6 +1,7 @@
 import path from 'path';
 import { promises as fs } from 'fs';
 import { glob } from 'glob';
+import chalk from  'chalk';
 
 import {originalsFolder, compressedFolder, compressionToFormats} from './config.js';
 import removeIntermediatePaths from './lib/removeIntermediatePaths.js';
@@ -43,11 +44,14 @@ for (const originalImg of originalImgs) {
         );
     });
 }
-await Promise.all(compressionPromises);
-
-
-// Log the number of compressed images and the time taken for compression
-const numberOfCompressedImages = compressionPromises.length;
-const imageWord = compressionPromises.length == 1 ? "image" : "images";
-const executionTime = ((performance.now() - startTime) / 1000).toFixed(1);
-console.log(`\n${numberOfCompressedImages} compressed ${imageWord} created in ${executionTime} seconds.`);
+Promise.all(compressionPromises)
+    .then(() => {
+        // Log the number of compressed images and the time taken for compression
+        const numberOfCompressedImages = compressionPromises.length;
+        const imageWord = compressionPromises.length == 1 ? "image" : "images";
+        const executionTime = ((performance.now() - startTime) / 1000).toFixed(1);
+        console.log(`\n${numberOfCompressedImages} compressed ${imageWord} created in ${executionTime} seconds.`);
+    })
+    .catch(error => {
+        console.error(chalk.red("\n" + error));
+    });
