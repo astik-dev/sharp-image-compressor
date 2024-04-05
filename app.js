@@ -2,17 +2,13 @@ import path from 'path';
 import { promises as fs } from 'fs';
 import { glob } from 'glob';
 
+import {originalsFolder, compressedFolder, compressionToFormats} from './config.js';
 import removeIntermediatePaths from './lib/removeIntermediatePaths.js';
 import changeFileExtension from './lib/changeFileExtension.js';
 import compressImage from './lib/compressImage.js';
 
 
 const startTime = performance.now();
-
-
-const originalsFolder = "./images/originals/";
-const compressedFolder = "./images/compressed/";
-const compressionToFormats = ["jpeg", "webp"];
 
 
 const originalImgs = await glob('./**/*.{jpg,jpeg,png}', {cwd: originalsFolder});
