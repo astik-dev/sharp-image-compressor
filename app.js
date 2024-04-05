@@ -7,6 +7,9 @@ import changeFileExtension from './lib/changeFileExtension.js';
 import compressImage from './lib/compressImage.js';
 
 
+const startTime = performance.now();
+
+
 const originalsFolder = "./images/originals/";
 const compressedFolder = "./images/compressed/";
 const compressionToFormats = ["jpeg", "webp"];
@@ -30,6 +33,7 @@ await Promise.all(
 
 
 // Compress each original image
+const compressionPromises = [];
 for (const originalImg of originalImgs) {
     
     const inputPath = path.join(originalsFolder, originalImg);
@@ -38,6 +42,16 @@ for (const originalImg of originalImgs) {
     compressionToFormats.forEach(format => {
         const outputPathWithNewFormat = changeFileExtension(outputPath, format);
         if (compressedImgs.has(outputPathWithNewFormat)) return;
-        compressImage(inputPath, outputPathWithNewFormat, format);
+        compressionPromises.push(
+            compressImage(inputPath, outputPathWithNewFormat, format)
+        );
     });
 }
+await Promise.all(compressionPromises);
+
+
+// Log the number of compressed images and the time taken for compression
+const numberOfCompressedImages = compressionPromises.length;
+const imageWord = compressionPromises.length == 1 ? "image" : "images";
+const executionTime = ((performance.now() - startTime) / 1000).toFixed(1);
+console.log(`\n${numberOfCompressedImages} compressed ${imageWord} created in ${executionTime} seconds.`);
