@@ -3,7 +3,7 @@ import { promises as fs } from 'fs';
 import { glob } from 'glob';
 import chalk from  'chalk';
 
-import {originalsFolder, compressedFolder, compressionToFormats} from './config.js';
+import {originalsFolder, compressedFolder, extensionsToCompression, compressionToFormats} from './config.js';
 import removeIntermediatePaths from './lib/removeIntermediatePaths.js';
 import changeFileExtension from './lib/changeFileExtension.js';
 import compressImage from './lib/compressImage.js';
@@ -12,7 +12,7 @@ import compressImage from './lib/compressImage.js';
 const startTime = performance.now();
 
 
-const originalImgs = await glob('./**/*.{jpg,jpeg,png}', {cwd: originalsFolder});
+const originalImgs = await glob(`./**/*.{${extensionsToCompression}}`, {cwd: originalsFolder});
 const compressedImgs = new Set(
     await glob(`${compressedFolder}**/*.{${compressionToFormats.join(",")}}`)
 );

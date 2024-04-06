@@ -2,6 +2,10 @@
 export const originalsFolder = "./images/originals/";
 // Folder for compressed images
 export const compressedFolder = "./images/compressed/";
+
+// Extensions of original images that will be compressed
+// eg. "jpg,jpeg,png" will compress images with ".jpg", ".jpeg" and ".png" extensions.
+export const extensionsToCompression = "jpg,jpeg,png";
 // Formats to which original images will be compressed
 export const compressionToFormats = ["jpeg", "webp"];
 
