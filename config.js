@@ -21,6 +21,9 @@ export const compressionOptions = {
     png: {
         quality: 80,
     },
+    tiff: {
+        quality: 80,
+    },
     webp: {
         quality: 70,
     },
